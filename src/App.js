@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Container, AppBar, Typography, Grow, Grid} from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+// ? { useDispatch } allow it to dispatch action
 
+import { getPosts } from './actions/posts'
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import memories from './images/memories.png';
@@ -12,6 +15,12 @@ const App = () => {
     // ? defint the class function for style and apply it
     // ? it will be the same way for style of all components
     // ? to do style efficiently and independence between components
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPosts());
+    }, [dispatch]);
+
     return (
         <Container maxidth="lg">
             <AppBar className={classes.appBar} position="static" color="inherit">
@@ -20,7 +29,7 @@ const App = () => {
             </AppBar>
             <Grow in>
                 <Container>
-                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+                    <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
                         <Grid item xs={12} sm={7}>
                             <Posts />
                         </Grid>
@@ -35,3 +44,5 @@ const App = () => {
 }
 
 export default App;
+// ? in pre-hook, to use redux we have to map state to props
+// ? which is hard and complicate but now it will easy now with hook
