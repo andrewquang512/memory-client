@@ -21,5 +21,16 @@ export const getPosts = () => async (dispatch) => {
     // instead of return action, it will dispatch the action
 }
 
+export const createPost = (post) => async (dispatch) => {
+    try {
+      const { data } = await api.createPost(post);
+  
+      dispatch({ type: 'CREATE', payload: data });
+    } catch (error) {
+      console.log(error.message);
+    }
+};
+
+
 // ? we have to use redux tank to work with asynchronous
 // ? which need time to pass

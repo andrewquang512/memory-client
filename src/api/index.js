@@ -3,6 +3,7 @@ import axios from 'axios';
 const url = "http://localhost:5000/posts";
 
 export const fetchPosts = () => axios.get(url);
+export const createPost = (newPost) => axios.post(url, newPost);
 
 // ? we gonna focus on adding redux because all actions toward back-end
 // ? all be done by using REDUX and we need to dispatch those actions
