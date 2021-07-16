@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import postRoutes from './routes/posts.js';
+
 //const express = require('express');
 // ? in older version we have to do this but
 // ? in node new version now it is not required to do this
@@ -17,6 +19,9 @@ const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors());
+
+app.use('/posts', postRoutes);
+// ? above line say that we have to go http://localhost:5000/posts to use {postRoutes}
 
 const CONNECTION_URL ='mongodb+srv://memoryprojectquangchanvi:TdQCzU1SxL44HO8B@cluster0.1min1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 // this credential should be secured so this is temporary and put in environment variable
