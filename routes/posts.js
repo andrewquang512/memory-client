@@ -1,10 +1,15 @@
 import express from "express";
-import { getPosts, createPosts } from "../controllers/posts.js";
+import { getPosts, getPost, createPost, updatePost, likePost, deletePost } from "../controllers/posts.js";
 
 const router = express.Router();
 
-router.get('/', getPosts );
-router.post('/', createPosts );
+router.get('/', getPosts);
+router.post('/', createPost);
+router.get('/:id', getPost);
+router.patch('/:id', updatePost);
+router.delete('/:id', deletePost);
+router.patch('/:id/likePost', likePost);
+// ? is has to be :id we need to know id before we edit something - update post
 
 // router.get('/', (req, res) => {
 //     res.send('THIS WORK!' + req.params.id);
