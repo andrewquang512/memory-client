@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 // this credential should be secured so this is temporary and put in environment variable
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     // {.then} If app connection success 
     .then(() => app.listen(PORT, () => console.log(`server running on port: ${PORT}`)))
     // {.catch} If app connection not success 
