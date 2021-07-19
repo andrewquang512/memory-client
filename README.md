@@ -1,3 +1,7 @@
+# This is a remake version of JavaScript Mastery series for learning purpose
+
+You can check [my demo here:](https://chanvi-example-mern-app.netlify.app)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
