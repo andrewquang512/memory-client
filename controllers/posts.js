@@ -90,5 +90,18 @@ export const likePost = async (req, res) => {
     res.json(updatedPost);
 }
 
+// req.params
+// This property is an object containing properties mapped to the named route “parameters”.
+// For example, if you have the route /user/:name, then the “name” property is available as req.params.name
+// This object defaults to {}.
+// source: http://expressjs.com/en/4x/api.html#req.params
+
+// req.body
+// Contains key-value pairs of data submitted in the request body.
+// By default, it is undefined, and is populated
+// when you use body-parsing middleware such as body-parser and multer.
+// source: http://expressjs.com/en/4x/api.html#req.body
+
+
 // ? req is an object containing information about HTTP request
 // ? in response to req, you use res to send back the desired HTTP response
