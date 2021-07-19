@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
     res.send('Hello to My API');
 });
 
-//const CONNECTION_URL ='mongodb+srv://memoryprojectquangchanvi:TdQCzU1SxL44HO8B@cluster0.1min1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//const CONNECTION_URL ='mongodb+srv://<NAME>:<PASSWORD>@cluster0.1min1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 // ? this credential should be secured so this is temporary and put in environment variable
 const PORT = process.env.PORT || 5000;
 
