@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const url = 'https://my-mern-stack-application.herokuapp.com/posts';
-const url = 'http://localhost:5000/posts'; // TODO: comment this when push to github
+const url = 'https://my-mern-stack-application.herokuapp.com/posts';
+//const url = 'http://localhost:5000/posts'; // TODO: comment this when push to github
 
 export const fetchPosts = () => axios.get(url);
 export const createPost = (newPost) => axios.post(url, newPost);
