@@ -6,10 +6,17 @@ import mongoose from 'mongoose';
 //     res.send('THIS WORKS:' + req.params.id);
 // }
 
-export const getPosts = async (req, res) =>{
-    try {  // ? code in here is run if everything successful
+const router = express.Router();
 
-        const postMessage = await PostMessage.find();
+export const getPosts = async (req, res) =>{
+    const { page } = req.query;
+    
+    try {  // ? code in here is run if everything successful
+        const LIMIT = 8;
+        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+
+        const total = await PostMessage.countDocuments({});
+        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
         // ? const postMessage = PostMessage.find();
         // ? it will find something inside a model it will take times
         // ? that's mean it is a asynchronous action
@@ -17,10 +24,25 @@ export const getPosts = async (req, res) =>{
 
         //console.log(postMessage);
         
-        res.status(200).json(postMessage);
+        res.json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
+        //res.status(200).json(postMessage);
         // ? above line make function return something: status 200 = OK , json file postMessage
 
     } catch (error) { // ? if something wrong happen it will execute here
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query;
+
+    try {
+        const title = new RegExp(searchQuery, "i");
+
+        const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
+
+        res.json({ data: posts });
+    } catch (error) {    
         res.status(404).json({ message: error.message });
     }
 }
@@ -43,13 +65,14 @@ export const getPost = async (req, res) => {
 export const createPost = async (req, res) =>{
     const post = req.body;
 
-    const newPost = new PostMessage(post); // later on we will pass value in form in front-end to this
+    //const newPost = new PostMessage(post); // later on we will pass value in form in front-end to this
+    const newPostMessage = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
 
     try {
-        await newPost.save();
+        await newPostMessage.save();
 
         // https://www.restapitutorial.com/httpstatuscode.html
-        res.status(201).json(newPost);
+        res.status(201).json(newPostMessage);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -79,15 +102,35 @@ export const deletePost = async (req, res) => {
 }
 
 export const likePost = async (req, res) => {
+    // const { id } = req.params;
+
+    // if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    
+    // const post = await PostMessage.findById(id);
+
+    // const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+    
+    // res.json(updatedPost);
+
     const { id } = req.params;
+
+    if (!req.userId) {
+        return res.json({ message: "Unauthenticated" });
+      }
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     
     const post = await PostMessage.findById(id);
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
-    
-    res.json(updatedPost);
+    const index = post.likes.findIndex((id) => id ===String(req.userId));
+
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+    res.status(200).json(updatedPost);
 }
 
 // req.params
@@ -105,3 +148,5 @@ export const likePost = async (req, res) => {
 
 // ? req is an object containing information about HTTP request
 // ? in response to req, you use res to send back the desired HTTP response
+
+export default router;

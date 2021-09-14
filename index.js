@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import postRoutes from './routes/posts.js';
+import userRouter from "./routes/user.js";
 dotenv.config();
 
 //const express = require('express');
@@ -24,6 +25,9 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 // ? above line say that we have to go http://localhost:5000/posts to use {postRoutes}
+
+app.use("/user", userRouter);
+// ? above line say that we have to go http://localhost:5000/user to use {userRouter}
 
 app.get('/', (req, res) => {
     res.send('Hello to My API');
