@@ -1,0 +1,31 @@
+{
+  "name": "memory-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewquang512/memory-server.git"
+  },
+  "keywords": [],
+  "author": "Andrew Quang <andrew.viquang@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewquang512/memory-server/issues"
+  },
+  "homepage": "https://github.com/andrewquang512/memory-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15"
+  }
+}
